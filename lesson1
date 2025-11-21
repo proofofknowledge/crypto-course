@@ -1,0 +1,964 @@
+<style>
+    /* Prevent scroll bars - force everything to fit within viewport */
+    * {
+        box-sizing: border-box !important;
+    }
+    
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100% !important;
+    }
+
+    .coin-counter {
+        background-color: #000000 !important;
+        border-bottom: 2px solid #ff8c00 !important;
+        padding: 1rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .coin-counter-inner {
+        width: 100% !important;
+        padding: 0 1rem !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        box-sizing: border-box !important;
+    }
+
+    .coin-badge {
+        background-color: #ff8c00 !important;
+        color: #000000 !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 0.5rem !important;
+        font-weight: bold !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+    }
+
+    .lesson-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 2rem 1.5rem !important;
+        box-sizing: border-box !important;
+    }
+
+    .progress-bar-container {
+        margin-bottom: 2rem;
+    }
+
+    .progress-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+        color: #9ca3af;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 0.5rem;
+        background-color: #1f2937;
+        border-radius: 9999px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background-color: #ff8c00;
+        transition: width 0.5s ease;
+    }
+
+    .lesson-card {
+        background: linear-gradient(to bottom right, #1a1a1a, #000000);
+        border: 1px solid #374151;
+        border-radius: 1rem;
+        padding: 3rem 2rem;
+        min-height: 600px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .lesson-content {
+        flex-grow: 1;
+    }
+
+    .lesson-content h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ff8c00;
+        margin-bottom: 2rem;
+    }
+
+    .content-text {
+        font-size: 1.25rem;
+        line-height: 1.8;
+        color: #d1d5db;
+        margin-bottom: 1rem;
+    }
+
+    .interactive-button {
+        background-color: #ff8c00;
+        color: #000000;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        font-size: 1.125rem;
+        border: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 2rem 0;
+        transition: all 0.3s;
+    }
+
+    .interactive-button:hover {
+        background-color: #ff9d1a;
+        transform: scale(1.05);
+    }
+
+    .commodity-card {
+        background-color: #1f2937;
+        border: 2px solid #374151;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .commodity-card:hover {
+        border-color: #ff8c00;
+        background-color: #2d3748;
+    }
+
+    .commodity-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .commodity-emoji {
+        font-size: 2.5rem;
+    }
+
+    .commodity-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ff8c00;
+    }
+
+    .commodity-region {
+        font-size: 0.875rem;
+        color: #9ca3af;
+    }
+
+    .commodity-reason {
+        font-size: 1.125rem;
+        color: #d1d5db;
+        margin-top: 0.75rem;
+        padding-left: 3.5rem;
+        display: none;
+    }
+
+    .commodity-reason.show {
+        display: block;
+        animation: fadeIn 0.3s;
+    }
+
+    .alert-box {
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        margin: 1.5rem 0;
+        display: flex;
+        gap: 1rem;
+    }
+
+    .alert-orange {
+        background-color: rgba(255, 140, 0, 0.2);
+        border-left: 4px solid #ff8c00;
+    }
+
+    .alert-red {
+        background-color: rgba(239, 68, 68, 0.2);
+        border: 2px solid #ef4444;
+    }
+
+    .alert-green {
+        background-color: rgba(34, 197, 94, 0.2);
+        border: 2px solid #22c55e;
+    }
+
+    .alert-yellow {
+        background-color: rgba(234, 179, 8, 0.2);
+        border: 2px solid #eab308;
+    }
+
+    .problem-box {
+        background-color: #1f2937;
+        border-left: 4px solid #ff8c00;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .problem-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #ff8c00;
+        margin-bottom: 0.5rem;
+    }
+
+    .reason-box {
+        background-color: #1f2937;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .reason-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #ff8c00;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-highlight {
+        padding: 2rem;
+        background: linear-gradient(to right, #ff8c00, #dc2626);
+        border-radius: 0.75rem;
+        margin: 1.5rem 0;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .key-insight {
+        padding: 2rem;
+        background-color: rgba(255, 140, 0, 0.2);
+        border: 2px solid #ff8c00;
+        border-radius: 0.75rem;
+        margin: 1.5rem 0;
+        text-align: center;
+    }
+
+    .insight-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .insight-text {
+        font-size: 1.75rem;
+        font-weight: bold;
+        color: #ff8c00;
+    }
+
+    .properties-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.75rem;
+        color: #d1d5db;
+        margin-top: 1rem;
+    }
+
+    .navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid #374151;
+    }
+
+    .nav-button {
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s;
+    }
+
+    .nav-button-prev {
+        background-color: #374151;
+        color: #ffffff;
+    }
+
+    .nav-button-prev:hover:not(:disabled) {
+        background-color: #4b5563;
+    }
+
+    .nav-button-prev:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .nav-button-next {
+        background-color: #ff8c00;
+        color: #000000;
+    }
+
+    .nav-button-next:hover {
+        background-color: #ff9d1a;
+        transform: scale(1.05);
+    }
+
+    .quiz-container {
+        background: linear-gradient(to bottom right, #1a1a1a, #000000);
+        border: 1px solid #374151;
+        border-radius: 1rem;
+        padding: 3rem 2rem;
+    }
+
+    .quiz-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .quiz-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ff8c00;
+    }
+
+    .quiz-subtitle {
+        color: #9ca3af;
+        margin-bottom: 2rem;
+    }
+
+    .question-card {
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .question-text {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #ff8c00;
+    }
+
+    .option-button {
+        width: 100%;
+        text-align: left;
+        padding: 1rem;
+        border-radius: 0.75rem;
+        border: 2px solid transparent;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+        cursor: pointer;
+        margin-bottom: 0.75rem;
+        transition: all 0.3s;
+    }
+
+    .option-button:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .option-button.selected {
+        background-color: #ff8c00;
+        color: #000000;
+        border-color: #ff9d1a;
+        font-weight: bold;
+        transform: scale(1.02);
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 1rem;
+        background-color: #ff8c00;
+        color: #000000;
+        border: none;
+        border-radius: 0.75rem;
+        font-size: 1.25rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .submit-button:hover:not(:disabled) {
+        background-color: #ff9d1a;
+        transform: scale(1.02);
+    }
+
+    .submit-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .result-banner {
+        text-align: center;
+        padding: 2rem;
+        background-color: rgba(255, 140, 0, 0.1);
+        border: 2px solid #ff8c00;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .result-emoji {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+
+    .result-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .result-coins {
+        font-size: 1.25rem;
+    }
+
+    .coins-highlight {
+        color: #ff8c00;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+
+    .answer-review {
+        padding: 1.5rem;
+        border-radius: 1rem;
+        border: 2px solid;
+        margin-bottom: 1.5rem;
+    }
+
+    .answer-correct {
+        background-color: rgba(34, 197, 94, 0.2);
+        border-color: #22c55e;
+    }
+
+    .answer-incorrect {
+        background-color: rgba(239, 68, 68, 0.2);
+        border-color: #ef4444;
+    }
+
+    .answer-header {
+        display: flex;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .answer-icon {
+        flex-shrink: 0;
+    }
+
+    .explanation-box {
+        font-size: 0.875rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        margin-top: 0.75rem;
+    }
+
+    .next-lesson {
+        padding: 2rem;
+        background: linear-gradient(to right, #ff8c00, #ff1744);
+        border-radius: 1rem;
+        text-align: center;
+    }
+
+    .next-lesson h4 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.75rem;
+    }
+
+    .next-lesson-title {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .next-lesson-button {
+        padding: 0.75rem 2rem;
+        background-color: #000000;
+        color: #ffffff;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .next-lesson-button:hover {
+        background-color: #1a1a1a;
+        transform: scale(1.05);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        .lesson-content h1 {
+            font-size: 2rem;
+        }
+
+        .content-text {
+            font-size: 1.125rem;
+        }
+
+        .lesson-card {
+            padding: 2rem 1.5rem;
+        }
+
+        .quiz-container {
+            padding: 2rem 1.5rem;
+        }
+    }
+</style>
+
+<!-- Coin Counter -->
+<div class="coin-counter">
+    <div class="coin-counter-inner">
+        <div class="coin-badge">
+            <span>🏆</span>
+            <span id="coinDisplay">0 POK</span>
+        </div>
+    </div>
+</div>
+
+<div class="lesson-container">
+    <div class="progress-bar-container">
+        <div class="progress-info">
+            <span>Lesson 1: What Is Money?</span>
+            <span id="progressText">Section 1 / 8</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 12.5%"></div>
+        </div>
+    </div>
+
+    <div id="lessonContent">
+        <div class="lesson-card">
+            <div class="lesson-content" id="contentArea"></div>
+            <div class="navigation">
+                <button class="nav-button nav-button-prev" id="prevBtn" onclick="previousSection()" disabled>
+                    ← Previous
+                </button>
+                <button class="nav-button nav-button-next" id="nextBtn" onclick="nextSection()">
+                    Next →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="quizContent" class="hidden">
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <span style="font-size: 2.5rem;">🏆</span>
+                <h2 class="quiz-title">Knowledge Check!</h2>
+            </div>
+            <p class="quiz-subtitle">Let's see what you've learned!</p>
+            <div id="quizQuestions"></div>
+            <button class="submit-button" id="submitBtn" onclick="submitQuiz()" disabled>
+                Submit Answers
+            </button>
+            <div id="quizResults" class="hidden"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentSection = 0;
+    let coinsEarned = 0;
+    let quizAnswers = {};
+    let barterClicked = false;
+
+    const sections = [
+        {
+            id: 'hook',
+            title: 'What Is Money, Really?',
+            content: `
+                <p class="content-text">Quick question: What's the last thing you bought?</p>
+                <p class="content-text">A snack? Game skin? Concert ticket? Coffee?</p>
+                <p class="content-text">Here's the weird part: You traded some numbers (on a screen or a piece of paper) for a REAL thing. And everyone just... accepted it. The cashier didn't laugh at you. They didn't say 'sorry, I need actual value, not paper.'</p>
+                <p class="content-text">Why does this work? Let's find out by going back to a time when money didn't exist.</p>
+            `
+        },
+        {
+            id: 'barter',
+            title: 'Life Before Money Was... Complicated',
+            content: `
+                <p class="content-text">Imagine you're a wheat farmer in ancient times. You grew a ton of wheat, but you need shoes.</p>
+                <p class="content-text">So you find a shoemaker and say: 'Hey, I'll trade you wheat for shoes!'</p>
+                <p class="content-text">But there's a problem. The shoemaker? He doesn't need wheat. He needs a new roof.</p>
+                <div id="barterInteractive">
+                    <button class="interactive-button" onclick="showBarterFailure()">
+                        <span style="font-size: 1.5rem;">🌾</span>
+                        Try to Trade Your Wheat!
+                        <span style="font-size: 1.5rem;">👞</span>
+                    </button>
+                </div>
+            `
+        },
+        {
+            id: 'commodity',
+            title: 'Commodity Money: When Shells Were Currency',
+            content: `
+                <p class="content-text">Humans got smart. Instead of trading random stuff, we agreed on specific items everyone wanted:</p>
+                <div style="margin: 2rem 0;">
+                    <div class="commodity-card" onclick="toggleCommodity(0)">
+                        <div class="commodity-header">
+                            <span class="commodity-emoji">🐚</span>
+                            <div>
+                                <div class="commodity-name">Cowrie Shells</div>
+                                <div class="commodity-region">Pacific Islands, Africa, Asia</div>
+                            </div>
+                        </div>
+                        <div class="commodity-reason" id="commodity-0">
+                            Pretty, rare, hard to fake - literally the OG currency
+                        </div>
+                    </div>
+                    <div class="commodity-card" onclick="toggleCommodity(1)">
+                        <div class="commodity-header">
+                            <span class="commodity-emoji">🧂</span>
+                            <div>
+                                <div class="commodity-name">Salt</div>
+                                <div class="commodity-region">Rome, Africa</div>
+                            </div>
+                        </div>
+                        <div class="commodity-reason" id="commodity-1">
+                            Essential for survival - literally where 'salary' comes from (Roman soldiers were paid in salt!)
+                        </div>
+                    </div>
+                    <div class="commodity-card" onclick="toggleCommodity(2)">
+                        <div class="commodity-header">
+                            <span class="commodity-emoji">🍫</span>
+                            <div>
+                                <div class="commodity-name">Cacao Beans</div>
+                                <div class="commodity-region">Aztec Empire</div>
+                            </div>
+                        </div>
+                        <div class="commodity-reason" id="commodity-2">
+                            Delicious and made chocolate (non-negotiable)
+                        </div>
+                    </div>
+                </div>
+                <div class="alert-box alert-orange">
+                    <div>
+                        <p style="font-weight: bold; font-size: 1.25rem; color: #ff8c00; margin-bottom: 0.75rem;">What Made These Work:</p>
+                        <div class="properties-grid">
+                            <div>✅ Scarce</div>
+                            <div>✅ Durable</div>
+                            <div>✅ Divisible</div>
+                            <div>✅ Portable</div>
+                            <div>✅ Universally Desired</div>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        {
+            id: 'coins',
+            title: 'Why Kings Started Making Money Official',
+            content: `
+                <p class="content-text">Around 600 BCE, the Kingdom of Lydia (modern-day Turkey) had a brilliant idea:</p>
+                <p class="content-text">'What if we took chunks of gold and silver, stamped them with the king's face, and said THIS is official money?'</p>
+                <p class="content-text" style="margin-bottom: 2rem;">Why was this genius?</p>
+                <div class="problem-box">
+                    <div class="problem-title">Problem #1: Weight Fraud</div>
+                    <p style="color: #d1d5db;">Before coins, you had to weigh gold every trade. Sneaky traders would shave bits off. With standardized coins, you knew EXACTLY what you were getting.</p>
+                </div>
+                <div class="problem-box">
+                    <div class="problem-title">Problem #2: Purity Fraud</div>
+                    <p style="color: #d1d5db;">Is that REAL gold or gold-colored lead? The king's stamp was like a verified checkmark. It said: 'I guarantee this is legit. If it's fake, come yell at me.'</p>
+                </div>
+                <div class="problem-box">
+                    <div class="problem-title">Problem #3: Trust Issues</div>
+                    <p style="color: #d1d5db;">The king's face on money meant the government backed it. Counterfeiting = death penalty. So people trusted it.</p>
+                </div>
+                <div class="alert-box alert-green">
+                    <div>
+                        <p style="font-weight: bold; font-size: 1.125rem; color: #22c55e; margin-bottom: 0.5rem;">The Result:</p>
+                        <p style="color: #d1d5db;">Trade exploded. Suddenly you could buy things from strangers across the kingdom without worrying about scams.</p>
+                    </div>
+                </div>
+            `
+        },
+        {
+            id: 'paper',
+            title: "When China Said 'Let's NOT Carry Metal Anymore'",
+            content: `
+                <p class="content-text">Around 1000 CE, Chinese merchants had a problem: They were getting rich, but hauling thousands of heavy coins was exhausting, dangerous (hello, highway robbers), and inefficient.</p>
+                <p class="content-text">So they started leaving their coins with trustworthy businesses and carrying RECEIPTS instead.</p>
+                <p class="content-text">Then the government thought: 'Wait... what if WE issue the receipts?'</p>
+                <p class="content-text">And boom: Paper money was born.</p>
+                <div class="alert-box alert-yellow">
+                    <span style="font-size: 1.5rem;">⚠️</span>
+                    <div>
+                        <p style="color: #d1d5db;">But here's the catch: The paper itself was worthless. You could only exchange it for gold or silver at the government treasury. The paper was just a convenient IOU.</p>
+                    </div>
+                </div>
+            `
+        },
+        {
+            id: 'digital',
+            title: 'Money Stopped Being Physical',
+            content: `
+                <p class="content-text">Let's jump to YOUR lifetime.</p>
+                <p class="content-text">Right now, most money isn't cash. It's not even paper. It's... data.</p>
+                <p class="content-text">When you Venmo a friend, buy something online, or get paid from a job - it's just numbers changing in databases.</p>
+                <div class="stat-highlight">
+                    Only about 8% of money exists as physical cash. The other 92%? Just numbers in computers.
+                </div>
+            `
+        },
+        {
+            id: 'reveal',
+            title: 'Money Is Just... Agreement?',
+            content: `
+                <p class="content-text">Here's what every form of money has in common:</p>
+                <p class="content-text">Shells, salt, coins, paper, digital numbers...</p>
+                <p class="content-text">None of them have VALUE by themselves. You can't eat a dollar bill. You can't build a house with Bitcoin.</p>
+                <p class="content-text">Money only works because WE ALL AGREE it works.</p>
+                <p class="content-text">It's the largest shared belief system in human history. Bigger than any religion. More universal than any language.</p>
+                <div class="key-insight">
+                    <div class="insight-icon">✨</div>
+                    <p class="insight-text">Money is trust made visible. That's it. That's the secret.</p>
+                </div>
+            `
+        },
+        {
+            id: 'matters',
+            title: 'Why This Matters To You',
+            content: `
+                <p class="content-text">Because understanding what money REALLY is changes everything:</p>
+                <div class="reason-box">
+                    <div class="reason-title">1. You'll understand inflation</div>
+                    <p style="color: #d1d5db;">If money is just agreement, what happens when governments print too much? (Spoiler: everyone agrees it's worth less)</p>
+                </div>
+                <div class="reason-box">
+                    <div class="reason-title">2. You'll understand cryptocurrency</div>
+                    <p style="color: #d1d5db;">Bitcoin isn't crazy. It's just a NEW agreement system. Instead of trusting banks, you trust math and code.</p>
+                </div>
+                <div class="reason-box">
+                    <div class="reason-title">3. You'll understand economic news</div>
+                    <p style="color: #d1d5db;">When you hear 'stock market crash' or 'recession,' you'll understand it's really about TRUST breaking down.</p>
+                </div>
+                <div class="reason-box">
+                    <div class="reason-title">4. You'll be ready for the future</div>
+                    <p style="color: #d1d5db;">Money is CHANGING. Again. Just like it went from shells → coins → paper → digital, it's evolving right now. And you're living through it.</p>
+                </div>
+            `
+        }
+    ];
+
+    const quizQuestions = [
+        {
+            id: 1,
+            question: "What was the main problem with barter?",
+            options: [
+                "It was illegal",
+                "You needed to find someone who had what you wanted AND wanted what you had",
+                "People didn't like trading",
+                "It required too much math"
+            ],
+            correct: 1,
+            explanation: "Exactly! Economists call this the 'double coincidence of wants' problem."
+        },
+        {
+            id: 2,
+            question: "What made cowrie shells, salt, and cacao beans work as early money?",
+            options: [
+                "They were shiny",
+                "Governments required them",
+                "They were scarce, durable, divisible, portable, and universally desired",
+                "They were edible"
+            ],
+            correct: 2,
+            explanation: "Nailed it! These properties are what make ANYTHING work as money."
+        },
+        {
+            id: 3,
+            question: "Why did kings stamp their faces on coins?",
+            options: [
+                "They were narcissists",
+                "To guarantee the coin's weight and purity + create trust",
+                "To make them pretty",
+                "Because everyone else was doing it"
+            ],
+            correct: 1,
+            explanation: "Right! The king's stamp was like an official guarantee."
+        },
+        {
+            id: 4,
+            question: "What percentage of money today exists as physical cash?",
+            options: [
+                "About 50%",
+                "About 75%",
+                "About 8%",
+                "About 30%"
+            ],
+            correct: 2,
+            explanation: "Yep! Only about 8% of money is physical."
+        },
+        {
+            id: 5,
+            question: "What's the ONE thing that makes ALL money work?",
+            options: [
+                "Government backing",
+                "Physical value",
+                "Collective trust and agreement",
+                "Being shiny"
+            ],
+            correct: 2,
+            explanation: "BOOM! Money is a shared belief system."
+        }
+    ];
+
+    function renderSection() {
+        const section = sections[currentSection];
+        document.getElementById('contentArea').innerHTML = `<h1>${section.title}</h1>${section.content}`;
+        const progress = ((currentSection + 1) / sections.length) * 100;
+        document.getElementById('progressFill').style.width = progress + '%';
+        document.getElementById('progressText').textContent = `Section ${currentSection + 1} / ${sections.length}`;
+        document.getElementById('prevBtn').disabled = currentSection === 0;
+        document.getElementById('nextBtn').textContent = currentSection === sections.length - 1 ? 'Take the Quiz! →' : 'Next →';
+        window.scrollTo(0, 0);
+    }
+
+    function nextSection() {
+        if (currentSection < sections.length - 1) {
+            currentSection++;
+            renderSection();
+        } else {
+            showQuiz();
+        }
+    }
+
+    function previousSection() {
+        if (currentSection > 0) {
+            currentSection--;
+            renderSection();
+        }
+    }
+
+    function showBarterFailure() {
+        if (!barterClicked) {
+            barterClicked = true;
+            document.getElementById('barterInteractive').innerHTML = `
+                <div style="animation: fadeIn 0.5s;">
+                    <div class="alert-box alert-red">
+                        <div>
+                            <p style="font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem;">🙅‍♂️ "Nope, don't need wheat!"</p>
+                            <p style="font-size: 1.125rem; color: #d1d5db;">He needs roofing materials.</p>
+                        </div>
+                    </div>
+                    <p class="content-text" style="padding: 0 1rem;">
+                        So now you have to: Find someone who needs wheat AND has roofing materials → Trade wheat for roofing stuff → Take the roofing stuff to the shoemaker → FINALLY get your shoes
+                    </p>
+                    <div class="alert-box alert-orange">
+                        <span style="font-size: 1.5rem;">⚠️</span>
+                        <div>
+                            <p style="font-weight: bold; font-size: 1.125rem; margin-bottom: 0.5rem;">The "Double Coincidence of Wants" Problem</p>
+                            <p style="color: #d1d5db;">Barter only works about 2% of the time.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    function toggleCommodity(index) {
+        const element = document.getElementById(`commodity-${index}`);
+        element.classList.toggle('show');
+    }
+
+    function showQuiz() {
+        document.getElementById('lessonContent').classList.add('hidden');
+        document.getElementById('quizContent').classList.remove('hidden');
+        renderQuiz();
+        window.scrollTo(0, 0);
+    }
+
+    function renderQuiz() {
+        let html = '';
+        quizQuestions.forEach((q, i) => {
+            html += `<div class="question-card"><div class="question-text">Question ${i + 1}: ${q.question}</div>`;
+            q.options.forEach((opt, j) => {
+                html += `<button class="option-button" onclick="selectAnswer(${q.id}, ${j})">${opt}</button>`;
+            });
+            html += '</div>';
+        });
+        document.getElementById('quizQuestions').innerHTML = html;
+    }
+
+    function selectAnswer(questionId, optionIndex) {
+        quizAnswers[questionId] = optionIndex;
+        const buttons = document.querySelectorAll('.question-card')[questionId - 1].querySelectorAll('.option-button');
+        buttons.forEach((btn, i) => {
+            btn.classList.toggle('selected', i === optionIndex);
+        });
+        if (Object.keys(quizAnswers).length === quizQuestions.length) {
+            document.getElementById('submitBtn').disabled = false;
+        }
+    }
+
+    function submitQuiz() {
+        let correct = 0;
+        quizQuestions.forEach(q => {
+            if (quizAnswers[q.id] === q.correct) correct++;
+        });
+        coinsEarned = correct * 5;
+        showResults(correct);
+    }
+
+    function showResults(correct) {
+        document.getElementById('quizQuestions').classList.add('hidden');
+        document.getElementById('submitBtn').classList.add('hidden');
+        
+        let html = `<div class="result-banner"><div class="result-emoji">🎉</div><h3 class="result-title">Quiz Complete!</h3><p class="result-coins">You earned <span class="coins-highlight">${coinsEarned} POK!</span></p></div>`;
+        
+        quizQuestions.forEach((q, i) => {
+            const isCorrect = quizAnswers[q.id] === q.correct;
+            html += `<div class="answer-review ${isCorrect ? 'answer-correct' : 'answer-incorrect'}">
+                <div class="answer-header">
+                    <span style="font-size:1.5rem">${isCorrect ? '✅' : '❌'}</span>
+                    <div>
+                        <p style="font-weight:bold">Q${i + 1}: ${q.question}</p>
+                        <p style="color:#d1d5db;margin-top:.5rem">Your answer: ${q.options[quizAnswers[q.id]]}</p>
+                        ${!isCorrect ? `<p style="color:#d1d5db">Correct: ${q.options[q.correct]}</p>` : ''}
+                    </div>
+                </div>
+                <div class="explanation-box">${q.explanation}</div>
+            </div>`;
+        });
+        
+        html += `<div class="next-lesson">
+            <h4>🏁 Coming Up Next...</h4>
+            <p class="next-lesson-title">Lesson 2: How We Use Money Today</p>
+            <p style="margin-bottom:1.5rem">From cash to crypto - money in the digital age</p>
+            <button class="next-lesson-button" onclick="window.location.href='/lesson-2'; window.scrollTo(0,0);">
+                Continue to Lesson 2 →
+            </button>
+        </div>`;
+        
+        document.getElementById('quizResults').innerHTML = html;
+        document.getElementById('quizResults').classList.remove('hidden');
+        window.scrollTo(0, 0);
+    }
+
+    renderSection();
+    
+    // Auto-scroll to top when page loads
+    window.addEventListener('load', function() { window.scrollTo(0, 0); });
+    window.scrollTo(0, 0);
+</script>
